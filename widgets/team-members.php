@@ -2,15 +2,15 @@
 class Team_Member_Widget extends \Elementor\Widget_Base {
 
 	public function get_name() {
-		return 'test_widget';
+		return 'team_widget';
 	}
 
 	public function get_title() {
-		return esc_html__( 'Test Widget', 'elementor-addon' );
+		return esc_html__( 'Team Widget', 'elementor-addon' );
 	}
 
 	public function get_icon() {
-		return 'eicon-menu-bar';
+		return 'eicon-person';
 	}
 
 	public function get_categories() {
@@ -18,7 +18,7 @@ class Team_Member_Widget extends \Elementor\Widget_Base {
 	}
 
 	public function get_keywords() {
-		return [ 'Test', 'world' ];
+		return [ 'Team', 'Members' ];
 	}
 
 	protected function register_controls() {
@@ -37,8 +37,24 @@ class Team_Member_Widget extends \Elementor\Widget_Base {
 			'title',
 			[
 				'label' => esc_html__( 'Title', 'elementor-addon' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'default' => esc_html__( 'Team Widget', 'elementor-addon' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Ashraf Uddin', 'elementor-addon' ),
+			]
+		);
+		$this->add_control(
+			'designation',
+			[
+				'label' => esc_html__( 'Designaton', 'elementor-addon' ),
+				'type' => \Elementor\Controls_Manager::TEXT,
+				'default' => esc_html__( 'Web Developer', 'elementor-addon' ),
+			]
+		);
+		$this->add_control(
+			'photo',
+			[
+				'label' => esc_html__( 'Photo', 'elementor-addon' ),
+				'type' => \Elementor\Controls_Manager::MEDIA,
+				
 			]
 		);
 
@@ -63,7 +79,7 @@ class Team_Member_Widget extends \Elementor\Widget_Base {
 				'label' => esc_html__( 'Text Color', 'elementor-addon' ),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
-					'{{WRAPPER}} .test-widget' => 'color: {{VALUE}};',
+					'{{WRAPPER}} .team-widget' => 'color: {{VALUE}};',
 				],
 			]
 		);
@@ -77,10 +93,15 @@ class Team_Member_Widget extends \Elementor\Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 		?>
+		<pre>
+			<?php echo var_dump($settings)?>
+		</pre>
 
-		<p class="test-widget">
-			<?php echo $settings['title']; ?>
-		</p>
+		<!-- <div class="ashraf-team-widget">
+			<div class="team-member-photo">
+				<?php echo wp_get_attachment_image($settings['photo'], ['id'],'large')?>
+			</div>
+		</div> -->
 
 		<?php
 	}

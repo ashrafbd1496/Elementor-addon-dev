@@ -16,6 +16,7 @@ function team_widget( $widgets_manager ) {
 
 	$widgets_manager->register( new \Elementor_Hello_World_Widget_1() );
 	$widgets_manager->register( new \Test_Widget() );
+	$widgets_manager->register( new \Team_Member_Widget() );
 
 }
 add_action( 'elementor/widgets/register', 'team_widget');
