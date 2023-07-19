@@ -32,3 +32,32 @@ function team_widget_enqueue_styles() {
     wp_enqueue_style( 'team-widget-custom-style' );
 }
 add_action( 'elementor/frontend/after_enqueue_styles', 'team_widget_enqueue_styles' );
+
+function team_widget_enqueue_scripts() {
+	wp_register_script(
+		'team-widget-custom-script',
+		plugin_dir_url(__FILE__) . '/widgets/team-widget.js', // Change the path if needed
+		array('jquery'),
+		'1.0.0',
+		true
+	);
+	wp_enqueue_script('team-widget-custom-script');
+}
+add_action('elementor/frontend/after_register_scripts', 'team_widget_enqueue_scripts');
+
+
+// function _register_controls_scripts() {
+//     wp_register_script(
+//         'team-widget-script',
+//         plugin_dir_url(__FILE__) . '/widgets/team-widget.js',
+//         array('jquery'),
+//         '1.0.0',
+//         true
+//     );
+// }
+
+// function render() {
+//     $settings = $this->get_settings_for_display();
+//     wp_enqueue_script('team-widget-script');
+//     // Rest of your render function
+// }

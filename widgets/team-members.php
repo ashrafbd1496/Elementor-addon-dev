@@ -68,6 +68,20 @@ class Team_Member_Widget extends \Elementor\Widget_Base
 			]
 		);
 		$this->add_control(
+			'hover_photo',
+			[
+				'label' => esc_html__('Hover Photo', 'elementor-addon'),
+				'type' => \Elementor\Controls_Manager::MEDIA,
+				'default' => [
+					'url' => '', // You can set a default hover image if needed
+				],
+				'condition' => [
+					'photo[url]!' => '', // Show this control only if the main image is set
+				],
+			]
+		);
+
+		$this->add_control(
 			'social_links',
 			[
 				'label' => esc_html__('Social Links', 'elementor-addon'),
@@ -147,14 +161,18 @@ class Team_Member_Widget extends \Elementor\Widget_Base
 	{
 		$settings = $this->get_settings_for_display();
 
-		$settings = $this->get_settings();
+		$unique_id = 'team_member_' . esc_attr( $this->get_id() );
+		$hover_image_url = !empty($settings['hover_photo']['url']) ? ' data-hover-image="' . esc_url($settings['hover_photo']['url']) . '"' : '';
 
 		// Get custom style from the settings
 		$custom_style = $settings['custom_style'];
 
 		 echo '<div class="ashraf-team-widget" style="' . esc_attr($custom_style) . '">';
+
         echo '<div class="team-member-photo">';
-            echo wp_get_attachment_image($settings['photo']['id'], 'large');
+
+		echo '<img id="' . $unique_id . '_normal" src="' . esc_url($settings['photo']['url']) . '" ' . $hover_image_url . ' />';
+
         echo '</div>';
         echo '<div class="team-member-info">';
             echo '<span class="name">' . $settings['name'] . '</span><br>';

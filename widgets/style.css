@@ -10,9 +10,13 @@
 
 .social-links a {
     border: 1px solid #000;
-    padding: 10px;
+    padding: 5px 10px;
     color: #000;
     margin: 0 5px;
+}
+.social-links a:hover { 
+    color: #fff;
+    background: #000;
 }
 
 .social-links {
@@ -24,7 +28,13 @@
     padding: 20px;
     text-align: center;
 }
-
+.team-member-photo img {
+    width: auto;
+    height: 200px;
+}
+.team-member-photo img:hover{
+    background-image: url();
+}
 .team-member-info {
     padding-top: 20px;
     padding-bottom: 20px;
