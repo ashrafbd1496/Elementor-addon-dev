@@ -20,3 +20,15 @@ function team_widget( $widgets_manager ) {
 
 }
 add_action( 'elementor/widgets/register', 'team_widget');
+
+
+
+// Function to enqueue custom styles
+function team_widget_enqueue_styles() {
+    // Register your custom style
+    wp_register_style( 'team-widget-custom-style', plugins_url( '/widgets/style.css', __FILE__ ), array(), '1.0.0', 'all' );
+
+    // Enqueue the style
+    wp_enqueue_style( 'team-widget-custom-style' );
+}
+add_action( 'elementor/frontend/after_enqueue_styles', 'team_widget_enqueue_styles' );

@@ -41,9 +41,9 @@ class Team_Member_Widget extends \Elementor\Widget_Base
 		);
 
 		$this->add_control(
-			'title',
+			'name',
 			[
-				'label' => esc_html__('Title', 'elementor-addon'),
+				'label' => esc_html__('Name', 'elementor-addon'),
 				'type' => \Elementor\Controls_Manager::TEXT,
 				'default' => esc_html__('Ashraf Uddin', 'elementor-addon'),
 			]
@@ -95,6 +95,30 @@ class Team_Member_Widget extends \Elementor\Widget_Base
 		// Style Tab Start
 
 		$this->start_controls_section(
+			'section_custom_style',
+			[
+				'label' => esc_html__( 'Custom Style', 'elementor-addon' ),
+				'tab' => \Elementor\Controls_Manager::TAB_STYLE,
+			]
+		);
+		
+		$this->add_control(
+			'custom_style',
+			[
+				'label' => esc_html__( 'Custom CSS', 'elementor-addon' ),
+				'type' => \Elementor\Controls_Manager::CODE,
+				'language' => 'css',
+				'rows' => 10,
+				'selectors' => [
+					'{{WRAPPER}} .your-element-class' => '{{VALUE}}',
+				],
+			]
+		);
+		
+		$this->end_controls_section();
+		
+		
+		$this->start_controls_section(
 			'section_title_style',
 			[
 				'label' => esc_html__('Title', 'elementor-addon'),
@@ -122,26 +146,28 @@ class Team_Member_Widget extends \Elementor\Widget_Base
 	protected function render()
 	{
 		$settings = $this->get_settings_for_display();
-?>
 
-		<div class="ashraf-team-widget">
-			<div class="team-member-photo">
-				<?php echo wp_get_attachment_image($settings['photo']['id'], 'large'); ?>
-			</div>
-			<div class="team-member-info">
-				<?php echo $settings['title'] . '<br>'; ?>
-				<?php echo $settings['designation']; ?>
-				<div class="social-links">
-					<?php foreach($settings['social_links'] as $links) : ?>
+		$settings = $this->get_settings();
 
-						<?php // echo var_dump($links); ?>
+		// Get custom style from the settings
+		$custom_style = $settings['custom_style'];
 
-						<a href="" target =""><i class=""></i></a>
-						<?php endforeach; ?>
-				</div>
-			</div>
-		</div>
+		 echo '<div class="ashraf-team-widget" style="' . esc_attr($custom_style) . '">';
+        echo '<div class="team-member-photo">';
+            echo wp_get_attachment_image($settings['photo']['id'], 'large');
+        echo '</div>';
+        echo '<div class="team-member-info">';
+            echo '<span class="name">' . $settings['name'] . '</span><br>';
+            echo '<span class="desig">' . $settings['designation'] . '</span><br>';
+            echo '<div class="social-links">';
+                foreach ($settings['social_links'] as $link) :
+                    $is_external = $link['link']['is_external'] == 'on' ? 'target="_blank"' : '';
+                    echo '<a href="' . $link['link']['url'] . '" ' . $is_external . '><i class="' . $link['icon']['value'] . '"></i></a>';
+                endforeach;
+            echo '</div>';
+        echo '</div>';
+    echo '</div>';
 
-<?php
+
 	}
 }
